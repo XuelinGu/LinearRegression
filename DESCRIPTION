@@ -15,9 +15,7 @@ Suggests:
     rmarkdown,
     testthat (>= 2.1.0),
     covr,
-    bench,
-    ggplot2,
-    tidyr
+    bench
 VignetteBuilder: knitr
 LinkingTo: 
     Rcpp, RcppArmadillo
