@@ -128,7 +128,7 @@ lr = function(formula, data, coding = "reference", intercept = TRUE, reference =
 
       ##if reference option is specified
       if (coding == "reference") {
-        if (reference) {
+        if (reference == 1) {
           x1 = x1[, -1]
         } else if ( any(colnames(x1) == reference) ) {
           x1 = x1[, -which(colnames(x1) == reference)]
