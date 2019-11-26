@@ -30,14 +30,18 @@ library(testPkg)
 
 ## Usage
 
-There is one main function **lr()** in this package. Basically, you can use the add formula to the argument which includes respond variable left, predictor variable right and connects previous two elements with ~, to run the function **lr()**:
+There is one main function **lr()** in this package. Basically, you can use the add formula to the argument which includes respond variable left, predictor variable right and connects previous two elements with ~, to run the function **lr()** and the samples can be vector, matrix or dataframe.
 
 ```r
 y = c(23, 24, 26, 37, 38, 25, 36, 40)
 x1 = c(1, 2, 3, 4, 5, 6, 7, 8)
 x2 = c(23, 32, 34, 20, 24, 56, 34, 24)
-result = lr(y ~ x1 + x2)
-result
+x3 = c("M", "F", "F", "U", "M", "F", "U", "M")
+x4 = mtcars$hp ### using "mtcars" dataframe from R
+
+result = lr(y ~ x1 + x2 + x3)
+
+result2 = lr(mtcars$mpg ~ cyl + disp + x4, data = mtcars)
 ```
 The result will return a list of estimates and inference results: "Coefficients", "F test and R square", "Fitted values", "Residuals", "Sum of Squares", "X inverse matrix", and "Coefficients Variance".
 
