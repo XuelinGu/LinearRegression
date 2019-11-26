@@ -79,4 +79,6 @@ or check the help page with
 ## Performance
 
 Firstly, lr() havs same correctness performance with lm(). Secondly, lr() is more efficient and uses less memory than common used lm() regarding to small or big samples without categorical variables. When categorical samples included for estimating model, lr() is less efficient than lm(). However, lr() uses less memory than lm() and you can specify any group as reference flexibly. 
+
+![equation](http://www.sciweavers.org/upload/Tex2Img_1574780243/render.png)
  
