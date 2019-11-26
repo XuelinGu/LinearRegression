@@ -6,32 +6,34 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
-
+---------
 # Fitting Linear Regression Model
 
 This package is used for fitting linear fitting linear regression models with numeric or categorical covariates.
 
-Firstly, *lr()* is used for estimating the linear regression model with similar estimated equation below:
+Firstly, ***lr()*** is used for estimating the linear regression model with similar estimated equation below:
 $\hat{Y_{i}} = \hat{\beta_{0}} + \hat{\beta_{1}} X_{1i} + \hat{\beta_{2}} X_{2i}$
 based on the observation samples of respond Y and predictor X's.
 
-Secondly, *lr()* will make some inference tests for estimated coefficients: $\hat{\beta_{0}} , \hat{\beta_{1}}$ and $\hat{\beta_{2}}$.
+Secondly, ***lr()*** will make some inference tests for estimated coefficients: $\hat{\beta_{0}} , \hat{\beta_{1}}$ and $\hat{\beta_{2}}$.
 
-Compared with commonly used *lm()* in package **stats**, the main function *lr()* in this package is more efficient with same accuracy since we used matrix operation function in Rcpp.
+Compared with commonly used ***lm()*** in package **stats**, the main function ***lr()*** in this package is more efficient with same correctness since we used matrix operation function in Rcpp.
 
-The goal of this tutorial is to give a general introduction to this package. It will help to know how to use *lr()* this package and its performance from following aspects:
+The goal of this tutorial is to give a general introduction to this package. It will help to know how to use ***lr()*** this package and its performance from following aspects:
 
-- Data preparing[^1]
-- Arguments and options for *lr()*[^2]
-- Performance of *lr()* compared with *lm()*[^3]
+- Data preparing
+- Arguments and options for ***lr()***
+- Performance of ***lr()*** compared with ***lr()***
 
----------
+
 
 ```{r setup}
 library(testPkg)
 ```
 
-## [^1]: Data preparing
+
+
+## 1. Data preparing
 
 There are three compatible types of data from Y and X's: vector, matrix and dataframe. In addition, Y must be numeric and X's can be numeric or categorical. For example,
 
@@ -43,9 +45,11 @@ x3 = c("M", "F", "F", "U", "M", "F", "U", "M")
 x4 = mtcars$hp ### using "mtcars" dataframe from R
 ```
 
-## [^2]: Arguments and options for *lr()*
 
-*formula* is necessasy for running *lr()* which indicates the Y and X's variables used for fitting model. And a list of estimated results and inference on coefficients are supported: "Coefficients", "F test and R square", "Fitted values", "Residuals", Sum of Squares", "X inverse matrix", and "Coefficients Variance".
+
+## 2. Arguments and options for ***lr()***
+
+***formula*** is necessasy for running ***lr()*** which indicates the Y and X's variables used for fitting model. And a list of estimated results and inference on coefficients are supported: "Coefficients", "F test and R square", "Fitted values", "Residuals", Sum of Squares", "X inverse matrix", and "Coefficients Variance".
 
 ```{r}
 result = lr(y ~ x1 + x2 + x3)
@@ -54,13 +58,13 @@ result
 
 In addition, there are 4 optional arguments for different fitting models: 
 
-*data*: indicates the dataframe name where variables' data come from. 
+***data***: indicates the dataframe name where variables' data come from. 
 
-*coding*: "reference"(by default) or "means", which indicates the *cell reference coding* or *cell means coding* method used when categorical X included. The revious one will take first appeared group of X as reference and reserve the intercept term while the latter one will eliminate the intercept of the model.
+***coding***: "reference"(by default) or "means", which indicates the **cell reference coding** or **cell means coding** method used when categorical X included. The revious one will take first appeared group of X as reference and reserve the intercept term while the latter one will eliminate the intercept of the model.
 
-*intercept*: "TRUE"(by default) or "FALSE", which indicates whether the model will contains an intercept term
+***intercept***: "TRUE"(by default) or "FALSE", which indicates whether the model will contains an intercept term
 
-*reference*:  1 (by default take the first appeared group of X as reference) or any group value of included categorical X choosen as reference group.
+***reference***:  1 (by default take the first appeared group of X as reference) or any group value of included categorical X choosen as reference group.
 
 ```{r}
 ##check the difference of coefficients under different options
@@ -75,11 +79,12 @@ result4[[1]]
 ```
 
 
-## [^3]: Performance of *lr()* compared with *lm()*
+
+## 3. Performance of ***lr()*** compared with ***lm()***
 
 ### Correctness
 
-Firstly, We can test small samples and relatively big samples to compare the correctness of *lr()* and *lm()* (which also included in testthat file). Since there is also a list of result returned by *lm()*, we can simply compare the estimated coefficients.
+Firstly, We can test small samples and relatively big samples to compare the correctness of ***lr()*** and ***lm()*** (which also included in testthat file). Since there is also a list of result returned by ***lm()***, we can simply compare the estimated coefficients.
 
 ```{r}
 ####small samples
@@ -95,17 +100,19 @@ x6 = rnorm(1e+6, 1, 10)
 all.equal(as.numeric(lr(y1 ~ x5 + x6)[[1]][, 1]), as.numeric(lm(y1 ~ x5 + x6)[[1]]))
 ```
 
-From result above, the correctness of *lr()* is the same of *lm()*.
+From result above, the correctness of ***lr()*** is the same of ***lm()***.
 
 ### Efficiency
 
-Similarly, We can test small samples and relatively big samples to compare the efficiency of *lr()* and *lm()*.
+Similarly, We can test small samples and relatively big samples to compare the efficiency of ***lr()*** and ***lm()***.
 
 ```{r}
 ####small samples
 ##1 samples from vector
 compare_result1 = bench::mark(lr(y ~ x1 + x2)[[1]][1, 1], lm(y ~ x1 + x2)[[1]][[1]])
 print(compare_result1)
+```
+```{r  fig.keep='all', fig.width=8, fig.height=5}
 plot(compare_result1)
 ```
 
@@ -113,6 +120,8 @@ plot(compare_result1)
 ##2 samples from vector with categorical variable
 compare_result1 = bench::mark(lr(y ~ x1 + x2 + x3, reference = "F")[[1]][1, 1], lm(y ~ x1 + x2 + x3)[[1]][[1]])
 print(compare_result1)
+```
+```{r  fig.keep='all', fig.width=8, fig.height=5}
 plot(compare_result1)
 ```
 
@@ -120,28 +129,34 @@ plot(compare_result1)
 ##3 samples from dataframe
 compare_result2 = bench::mark(lr(mtcars$mpg ~ mtcars$cyl + mtcars$disp)[[1]][1, 1], lm(mtcars$mpg ~ mtcars$cyl + mtcars$disp)[[1]][[1]])
 print(compare_result2)
+```
+```{r  fig.keep='all', fig.width=8, fig.height=5}
 plot(compare_result2)
 ```
 
-From result above, *lr()* is more efficient and less memory used than *lm()* when Y and X's are all numeric within small samples.
-When categorical variables are included, *lr()* is little less efficient than *lm()* but memory used is almost the same.
+From result above, ***lr()*** is more efficient and less memory used than ***lm()*** when Y and X's are all numeric within small samples.
+When categorical variables are included, ***lr()*** is little less efficient than ***lm()*** but memory used is almost the same.
 
 ```{r}
 ####big samples
 compare_result3 = bench::mark(for(i in 1:10) lr(y1 ~ x5 + x6)[[1]][1, 1], for(i in 1:10) lm(y1 ~ x5 + x6)[[1]][[1]])
 print(compare_result3)
-plot(compare_result3)
-
-
+```
+```{r  fig.keep='all', fig.width=8, fig.height=5}
+plot(compare_result3, groupOnX = FALSE)
+```
+```{r}
 ####big samples with categorical vairables
 x7=rep(c("M", "M", "F", "F", "U", "M", "F", "U", "M", "M"),1e+5)
 compare_result3 = bench::mark(lr(y1 ~ x5 + x6 + x7, reference = "F")[[1]][1, 1], lm(y1 ~ x5 + x6 + x7)[[1]][[1]])
 print(compare_result3)
+```
+```{r  fig.keep='all', fig.width=8, fig.height=5}
 plot(compare_result3)
 
 ```
 
-From result above, *lr()* is much more efficient and less memory than *lm()* when Y and X's are all numeric within big samples. When categorical variables are included, *lr()* is little less efficient than *lm()* and less memory used.
+From result above, ***lr()*** is much more efficient and less memory than ***lm()*** when Y and X's are all numeric within big samples. When categorical variables are included, ***lr()*** is little less efficient than ***lm()*** and less memory used.
 
 
 
