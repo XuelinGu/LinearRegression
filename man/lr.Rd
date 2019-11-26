@@ -4,7 +4,7 @@
 \alias{lr}
 \title{Linear Regression Fitting}
 \usage{
-lr(formula, data, coding = 'reference', intercept = TRUE, reference = 1)
+lr(formula, data, coding = "reference", intercept = TRUE, reference = 1)
 }
 \arguments{
 \item{formula}{an object of class \code{formula}: a symbolic form of the model to be fitted
@@ -16,13 +16,13 @@ If not found in data or by default, the variables would be taken from environmen
 called.}
 
 \item{coding}{optional,the method to be used for fitting categorical covaraites in the model.
-There are two options: coding = 'reference' (by default) or 'means' (see 'Details').}
+There are two options: coding = "reference" (by default) or "means" (see "Details").}
 
 \item{intercept}{logical. If TRUE (by default), the corresponding fitting model will contain
 intercept term.}
 
 \item{reference}{an optional categorical covariate group which would be considered as reference
-group when \code{coding} = 'reference' (by default). If not specified, model fitting will take
+group when \code{coding} = "reference" (by default). If not specified, model fitting will take
 first group occured among the corresponding covariate as reference.}
 }
 \value{
@@ -34,19 +34,19 @@ It can be used to estimate regression coefficients with least square method and 
 inference based on relevant t-test and F-test (sequential F-test can be realized by F_test).
 }
 \details{
-Models for lr are specified symbolically like 'y ~ x1 + x2'. A typical model has the form
-'response ~ covariates' where response is the numeric response vector and covariates are a
+Models for lr are specified symbolically like "y ~ x1 + x2". A typical model has the form
+"response ~ covariates" where response is the numeric response vector and covariates are a
 series of numeric or categorical terms which specifies a linear predictor for response. A
-covariate specification of the form 'x1 + x2' indicates covariates will contain all the
-observations in 'x1' and 'x2'.
+covariate specification of the form "x1 + x2" indicates covariates will contain all the
+observations in "x1" and "x2".
 
 In addition, regarding to the variable in a data frame contianed in model formula, they can be
-either expressed as mtcars$mpg or mpg with \code{data} = mtcars where 'mtcars' is the name of a
-data frame, and 'mpg' is the variable name in 'mtcars'.
+either expressed as mtcars$mpg or mpg with \code{data} = mtcars where "mtcars" is the name of a
+data frame, and "mpg" is the variable name in "mtcars".
 
 \code{coding} method is used to cope with model containing categorical covariates. Two common methods:
-'cell reference coding' and 'cell means coding' are supported by setting \code{coding} = 'reference'
-(by default) or 'means'. Former one takes one group of the corresponding categorical covariate as a
+"cell reference coding" and "cell means coding" are supported by setting \code{coding} = "reference"
+(by default) or "means". Former one takes one group of the corresponding categorical covariate as a
 reference group and reserve intercept in the model, while latter one just eliminates intercept in the
 model.
 }
