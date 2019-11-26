@@ -1,0 +1,22 @@
+Package: testPkg
+Type: Package
+Title: Linear Regression Fitting
+Version: 0.1.0
+Date: 2019-11-24
+Author: Xuelin Gu
+Maintainer: Xuelin Gu <xuelingu@umich.edu>
+Description: lr is used for fitting linear regression models with numeric or categorical covariates. It can be used to estimate regression coefficients with least square method and make inference based on relevant t-test and F-test (sequential F-test can be realized by F_test).
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.1
+Suggests: 
+    knitr,
+    rmarkdown,
+    testthat (>= 2.1.0),
+    covr
+VignetteBuilder: knitr
+LinkingTo: 
+    Rcpp, RcppArmadillo
+Imports: 
+    Rcpp (>= 0.12.15)
