@@ -135,8 +135,7 @@ print(compare_result2)
 plot(compare_result2)
 ```
 
-From result above, ***lr()*** is more efficient and less memory used than ***lm()*** when Y and X's are all numeric within small samples.
-When categorical variables are included, ***lr()*** is little less efficient than ***lm()*** but memory used is almost the same.
+From result above, ***lr()*** is much more efficient and less memory used than ***lm()*** when Y and X's are all numeric within small samples. When categorical variables are included, ***lr()*** is little more efficient than ***lm()*** and memory used is almost the same.
 
 ```{r}
 ####big samples
