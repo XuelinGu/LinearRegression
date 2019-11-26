@@ -18,6 +18,7 @@ test_that("testPkg",  {
   expect_equal(a,b)
   expect_equal(as.numeric(lr(y ~ x1)[[1]][, 1]), as.numeric(lm(y ~ x1)[[1]]))
   expect_equal(as.numeric(lr(y ~ x1 + x2)[[1]][, 1]), as.numeric(lm(y ~ x1 + x2)[[1]]))
+  expect_equal(as.numeric(lr(y ~ x1 + x2 + x3)[[1]][1, 1]), as.numeric(lm(y ~ x1 + x2 + x3)[[1]][[1]]))
   expect_equal(as.numeric(lr(mtcars$mpg ~ mtcars$cyl + mtcars$disp)[[1]][, 1]), as.numeric(lm(mtcars$mpg ~ mtcars$cyl + mtcars$disp)[[1]]))
   expect_equal(as.numeric(lr(mpg ~ cyl + disp + x4, data = mtcars)[[1]][, 1]), as.numeric(lm(mpg ~ cyl + disp + x4, data = mtcars)[[1]]))
 })

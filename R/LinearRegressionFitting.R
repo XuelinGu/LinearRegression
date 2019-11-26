@@ -82,9 +82,8 @@ lr = function(formula, data, coding = "reference", intercept = TRUE, reference =
   if (class(y) == "try-error") {
     if (length(data) > 0) {
       a = as.character( formula[[2]] )
-      y = try( get(a, data), silent = TRUE)
+      y = get(a, data)
     }
-    if (class(y) == "try-error") stop( "Cannot find data to fit model." )
   }
 
   ##1.2 get values of predict covariates x's,
@@ -162,31 +161,23 @@ lr = function(formula, data, coding = "reference", intercept = TRUE, reference =
 lr.fit = function(x, y) {
 
   ###record degree of freedom and covariates names
-  if (length(dim(x)) == 0)  {
-    n_row = length(x)
-    n_col = 1
-  } else {
     n_row = nrow(x)
     n_col = ncol(x)
-  }
   x_names = colnames(x)
 
   ### 1 estimating the coefficients using Least Squares Method using Rcpp function model_fit() (see "src" folder)
-  estimates = try(model_fit(x, y))
+  estimates = model_fit(x, y)
 
-  ####1.1 check whether x is full-column-rank
-  if (class(estimates) == "try-error") stop( "Multiple predictor 'x's were linear dependent or dimensions of 'x's and y were not matched." )
-
-  ###1.2 estimated coefficients, i.e. beta_hat
+  ###1.1 estimated coefficients, i.e. beta_hat
   beta_estimates = estimates[[1]]
 
-  ###1.3 fitted-values, i.e. Y_hat
+  ###1.2 fitted-values, i.e. Y_hat
   fitted_values = estimates[[2]]
 
-  ###1.4 residual, i.e. Y - Y_hat
+  ###1.3 residual, i.e. Y - Y_hat
   residual = estimates[[3]]
 
-  ###1.5 SSY,  SSR and SSE and their degree of freedom
+  ###1.4 SSY,  SSR and SSE and their degree of freedom
   SSE = sum(residual^2)
   SSR = sum((fitted_values - mean(y))^2)
   SSY = sum((y - mean(y))^2)
@@ -195,7 +186,7 @@ lr.fit = function(x, y) {
   df_SSR = n_col - 1
   df_SSY = n_row - 1
 
-  ###1.6 model fitting measure: R-squared and adjusted R-squared
+  ###1.5 model fitting measure: R-squared and adjusted R-squared
   R_square = SSR / SSY
   adj_R_square = 1 - SSE / df_SSE / (SSY / df_SSY)
 
