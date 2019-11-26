@@ -11,12 +11,12 @@
 testPkg is a R package for fitting linear regression model using Least Squares Method.
 
 For linear regression model with similar function form below:
-$Y_{i} = \beta_{0} + \beta_{1} X_{1i} + \beta_{2} X_{2i} + \epsilon_{i}$,
+$$Y_{i} = \beta_{0} + \beta_{1} X_{1i} + \beta_{2} X_{2i} + \epsilon_{i}$$,
 where Y is respond variable and X's are predictors, the estimated equation is following:
-$\hat{Y_{i}} = \hat{\beta_{0}} + \hat{\beta_{1}} X_{1i} + \hat{\beta_{2}} X_{2i}$
+$$\hat{Y_{i}} = \hat{\beta_{0}} + \hat{\beta_{1}} X_{1i} + \hat{\beta_{2}} X_{2i}$$
 based on the observation samples of respond Y and predictor X's.
 
-Least Squares Method aimed to estimate the coefficients above by minimizing residual sum of squares.
+Least Squares Method aimed to estimate the coefficients above by minimizing residual sum of squares so that $${\beta} = inverse(trans(X)*X)*X*Y$$. And this package uses RcppArmadillo to do matrix operation during estimation for efficiency.
 
 ## Installation
 
@@ -52,3 +52,8 @@ or check the help page with
 ```r
 ?lr
 ```
+
+## Performance
+
+Firstly, lr() havs same correctness performance with lm(). Secondly, lr() is more efficient and uses less memory than common used lm() regarding to small or big samples without categorical variables. When categorical samples included for estimating model, lr() is less efficient than lm(). However, lr() uses less memory than lm() and you can specify any group as reference flexibly. 
+ 
