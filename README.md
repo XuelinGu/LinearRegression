@@ -39,7 +39,30 @@ x2 = c(23, 32, 34, 20, 24, 56, 34, 24)
 result = lr(y ~ x1 + x2)
 result
 ```
-And the result will return a list of estimates and inference results: "Coefficients", "F test and R square", "Fitted values", "Residuals", "Sum of Squares", "X inverse matrix", and "Coefficients Variance".
+The result will return a list of estimates and inference results: "Coefficients", "F test and R square", "Fitted values", "Residuals", "Sum of Squares", "X inverse matrix", and "Coefficients Variance".
+
+In addition, there are 4 optional arguments for using lr() more flexily:
+ 
+***data***: indicates the dataframe name where variables' data come from. 
+
+***coding***: "reference"(by default) or "means", which indicates the **cell reference coding** or **cell means coding** method used when categorical X included. The revious one will take first appeared group of X as reference and reserve the intercept term while the latter one will eliminate the intercept of the model.
+
+***intercept***: "TRUE"(by default) or "FALSE", which indicates whether the model will contains an intercept term
+
+***reference***:  1 (by default take the first appeared group of X as reference) or any group value of included categorical X choosen as reference group.
+
+```r
+result1 = lr(y ~ x1 + x2 + x3) ##coding = "reference", intercept = TRUE, reference = 1
+
+result2 = lr(y ~ x1 + x2 + x3, coding = "means") ##with cell means coding method
+
+result3 = lr(y ~ x1 + x2 + x3, intercept = FALSE) ##elinimate intercept term
+
+result4 = lr(y ~ x1 + x2 + x3, reference = "F") ##speficy "F" reference group
+
+```
+
+## Support
 
 For fully knowing the usage and characteristics of this package or lr(), you could check vignettes with:
 
