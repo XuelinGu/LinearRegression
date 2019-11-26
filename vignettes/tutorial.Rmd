@@ -29,7 +29,7 @@ The goal of this tutorial is to give a general introduction to this package. It 
 
 ```{r setup}
 library(testPkg)
-library("bench")
+library(bench)
 ```
 
 
