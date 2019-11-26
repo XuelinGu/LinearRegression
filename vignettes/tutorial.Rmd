@@ -13,7 +13,7 @@ This package is used for fitting linear fitting linear regression models with nu
 
 Firstly, *lr()* is used for estimating the linear regression model with similar estimated equation below:
 $\hat{Y_{i}} = \hat{\beta_{0}} + \hat{\beta_{1}} X_{1i} + \hat{\beta_{2}} X_{2i}$
-based on the observation samples of Y and X's.
+based on the observation samples of respond Y and predictor X's.
 
 Secondly, *lr()* will make some inference tests for estimated coefficients: $\hat{\beta_{0}} , \hat{\beta_{1}}$ and $\hat{\beta_{2}}$.
 
@@ -41,14 +41,47 @@ x4 = mtcars$hp ### using "mtcars" dataframe from R
 ```
 
 ## [^2]; Arguments and options for *lr()*
-*formula* is necessasy for running *lr()*, 
-
+*formula* is necessasy for running *lr()* which indicates the Y and X's variables used for fitting model. And a list of estimated results and inference on coefficients are supported: "Coefficients", "F test and R square", "Fitted values", "Residuals", Sum of Squares", "X inverse matrix", and "Coefficients Variance".
 ```{r}
-y = c(23, 24, 26, 37, 38, 25, 36, 40)
-x1 = c(1, 2, 3, 4, 5, 6, 7, 8)
-x2 = c(23, 32, 34, 20, 24, 56, 34, 24)
-x3 = c("M", "F", "F", "U", "M", "F", "U", "M")
-x4 = mtcars$hp ### using 'mtcars' dataframe from R
+result = lr(y ~ x1 + x2 + x3)
+result
+Coefficients = result[[1]]  
+F_test_and_R2 = sresult[[2]] 
+Fitted_values = result[[3]]
+Residuals = result[[4]]
+SS = result[[5]]
+X_inverse = result[[6]]
+Coefficients+Variance = result[[7]]
 ```
 
+In addition, there are 4 optional arguments for different fitting models: 
+*data*: indicates the dataframe name where variables' data come from. 
+*coding*: "reference"(by default) or "means", which indicates the *cell reference coding* or *cell means coding* method used when categorical X included. The revious one will take first appeared group of X as reference and reserve the intercept term while the latter one will eliminate the intercept of the model.
+*intercept*: "TRUE"(by default) or "FALSE", which indicates whether the model will contains an intercept term
+*reference*:  1 (by default take the first appeared group of X as reference) or any group value of included categorical X choosen as reference group.
+```{r}
+result1 = lr(y ~ x1 + x2 + x3) ##coding = "reference", intercept = TRUE, reference = 1
+result1[[1]]                   ##check the difference of coefficients under different options
+result2 = lr(y ~ x1 + x2 + x3, coding = "means")
+result2[[1]]
+result3 = lr(y ~ x1 + x2 + x3, intercept = FALSE)
+result3[[1]]
+result4 = lr(y ~ x1 + x2 + x3, reference='F')
+result4[[1]]
+```
+
+
 ## [^3]; Arguments and options for *lr()*
+
+
+
+
+
+
+
+
+
+
+
+
+
