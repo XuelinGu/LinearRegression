@@ -8,7 +8,7 @@
   <!-- badges: end -->
   
 # LinearRegression
-*testPkg* is a R package for fitting linear regression model using Least Squares Method.
+**testPkg** is a R package for fitting linear regression model using Least Squares Method.
 
 For linear regression model with similar function form below:
 ![equation](http://www.sciweavers.org/upload/Tex2Img_1574780243/render.png)
@@ -20,7 +20,7 @@ Least Squares Method aimed to estimate the coefficients above by minimizing resi
 
 ## Installation
 
-Use package devtools to install *testPkg* package.
+Use package devtools to install **testPkg** package.
 
 ```r
 library(devtools)
@@ -30,7 +30,7 @@ library(testPkg)
 
 ## Usage
 
-There is one main function *lr()* in this package. Basically, you can use the add formula to the argument which includes respond variable left, predictor variable right and connects previous two elements with ~, to run the function *lr()*:
+There is one main function **lr()** in this package. Basically, you can use the add formula to the argument which includes respond variable left, predictor variable right and connects previous two elements with ~, to run the function **lr()**:
 
 ```r
 y = c(23, 24, 26, 37, 38, 25, 36, 40)
@@ -41,7 +41,7 @@ result
 ```
 The result will return a list of estimates and inference results: "Coefficients", "F test and R square", "Fitted values", "Residuals", "Sum of Squares", "X inverse matrix", and "Coefficients Variance".
 
-In addition, there are 4 optional *arguments* for using *lr()* more flexily:
+In addition, there are 4 optional **arguments** for using **lr()** more flexily:
  
 ***data***: indicates the dataframe name where variables' data come from. 
 
@@ -64,7 +64,7 @@ result4 = lr(y ~ x1 + x2 + x3, reference = "F") ##speficy "F" reference group
 
 ## Support
 
-For fully knowing the usage and characteristics of this package or *lr()*, you could check vignettes with:
+For fully knowing the usage and characteristics of this package or **lr()**, you could check vignettes with:
 
 ```r
 browseVignettes("testPkg")
@@ -78,6 +78,6 @@ or check the help page with
 
 ## Performance
 
-Firstly, *lr()* havs same correctness performance with *lm()*. Secondly, *lr()* is more efficient and uses less memory than common used *lm()* regarding to small or big samples without categorical variables. When categorical samples included for estimating model, *lr()* is less efficient than *lm()*. However, *lr()* uses less memory than *lm()* and you can specify any group as reference flexibly. 
+Firstly, **lr()** havs same correctness performance with **lm()**. Secondly, **lr()** is more efficient and uses less memory than common used **lm()** regarding to small or big samples without categorical variables. When categorical samples included for estimating model, **lr()** is less efficient than **lm()**. However, **lr()** uses less memory than **lm()** and you can specify any group as reference flexibly. 
 
  
