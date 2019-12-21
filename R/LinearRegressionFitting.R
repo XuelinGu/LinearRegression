@@ -63,6 +63,7 @@
 #'@aliases lr
 #'
 #'@export lr
+#'@export lr.fit
 #'
 #'@return linear regression fitting coefficients and reference results.
 #'
